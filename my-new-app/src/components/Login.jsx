@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function () {
+const Login = () => {
     return (
         <div className="add-PBI">
             <div className="container">
@@ -60,3 +60,4 @@ export default function () {
         </div>
     )
 }
+export default Login;

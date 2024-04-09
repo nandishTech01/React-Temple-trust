@@ -1,33 +1,79 @@
-import React from "react";
+import React, { useState } from "react";
+import { useSelector, useDispatch } from 'react-redux'
+import { addUser } from "../store/slices/UserSlice";
 
-export default function () {
+const Signup = () => {
+
+    const dispatch = useDispatch();
+
+    const [formData, setFormData] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: ""
+    });
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.id]: e.target.value
+        });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(addUser(formData));
+        setFormData({
+            firstName: "",
+            lastName: "",
+            email: "",
+            password: ""
+        });
+    };
+
+
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     try {
+    //         // Dispatch signupUser action with form data
+    //         await dispatch(signupUser(formData));
+    //         // Redirect to your Java Spring Boot API
+    //         history.push("http://localhost:8082/customer"); // Redirect using useHistory
+    //         // Alternatively, you can use window.location.href for manual redirection
+    //         // window.location.href = "http://localhost:8082/customer";
+    //     } catch (error) {
+    //         // Handle any errors here, such as displaying error messages to the user
+    //         console.error("Error occurred during form submission:", error);
+    //     }
+    // };
+    
+
     return (
-
         <div className="add-PBI">
             <div className="container">
                 <div className="row">
                     <div className="col-md-8 m-auto">
                         <h5 className="display-4 text-center">Sign Up</h5>
-                        <form>
+                        <form onSubmit={handleSubmit}>
                             <div className="row">
                                 <div className="col-md-6 mb-4">
                                     <div className="m-outline">
-                                        <input type="text" id="signup" className="form-control form-control-lg" placeholder="First Name" />
+                                        <input type="text" id="firstName" value={formData.firstName} onChange={handleChange} className="form-control form-control-lg" placeholder="First Name" />
                                     </div>
                                 </div>
                                 <div className="col-md-6 mb-4">
                                     <div className="form-outline">
-                                        <input type="text" id="login" className="form-control form-control-lg" placeholder="Last Name" />
+                                        <input type="text" id="lastName" value={formData.lastName} onChange={handleChange} className="form-control form-control-lg" placeholder="Last Name" />
                                     </div>
                                 </div>
                             </div>
 
                             <div className="form-outline mb-4">
-                                <input type="email" id="email" className="form-control form-control-lg" placeholder="Email address" />
+                                <input type="email" id="email" value={formData.email} onChange={handleChange} className="form-control form-control-lg" placeholder="Email address" />
                             </div>
 
                             <div className="form-outline mb-4">
-                                <input type="password" id="password" className="form-control form-control-lg" placeholder="Password" />
+                                <input type="password" id="password" value={formData.password} onChange={handleChange} className="form-control form-control-lg" placeholder="Password" />
                             </div>
 
                             <button type="submit" className="btn btn-primary btn-block mb-4">
@@ -57,6 +103,6 @@ export default function () {
                 </div>
             </div>
         </div>
-
     )
 }
+export default Signup;
